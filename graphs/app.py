@@ -22,10 +22,10 @@ from PIL import ImageGrab # save as png
 
 import time
 
-from items import *
-from log import * 
-from read_write import * 
-from graph_exc import *
+from ui.items import *
+from utils.log import * 
+from utils.read_write import * 
+from utils.graph_exc import *
 
 class App(tk.Frame):
     """
