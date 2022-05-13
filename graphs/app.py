@@ -280,7 +280,7 @@ if __name__ == '__main__':
     master.geometry('1000x700')
     
     # icon 
-    photo = PhotoImage(file = '~/Documents/python/petersen_icon.png')
+    photo = PhotoImage(file = '../src/petersen_icon.png')
     master.iconphoto(False, photo)
 
     app = App(master)
