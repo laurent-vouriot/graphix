@@ -245,8 +245,13 @@ class Graph(object):
         weight = edge.get_weight() 
             
         # for an undirected graph the verticies of an edge are symetrical. <--------- FAUX
-        self.adjacency_list[vx_start].append((vx_end, weight))
-        self.adjacency_list[vx_end].append((vx_start, weight))
+        if vx_start != vx_end:
+            print('pas loop')
+            self.adjacency_list[vx_start].append((vx_end, weight))
+            self.adjacency_list[vx_end].append((vx_start, weight))
+        else: # loop case
+            print('loop')
+            self.adjacency_list[vx_start].append((vx_end, weight))
 
         self.display_adjacency()
 
@@ -284,15 +289,12 @@ class Graph(object):
         vx_end = edge.get_vx_end()
         weight = edge.get_weight()
 
-        # loop case
         if vx_start != vx_end:
             # undirected graph
             self.adjacency_list[vx_start].remove((vx_end, weight))
             self.adjacency_list[vx_end].remove((vx_start, weight))
-        else: 
-            print('loop')
-            self.display_adjacency()
-            self.adjacency_list[vx_start].remove(vx_start)
+        else: # loop case
+            self.adjacency_list[vx_start].remove((vx_start, weight))
         
         self.display_adjacency()
 

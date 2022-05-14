@@ -317,6 +317,8 @@ class DrawEdge(BaseItem):
         self.graph.add_edge(Edge(self.vx1, self.vx2, line_id, 
                             weight=weight, weight_id=weight_id))
 
+        self.canvas.add_edge_items((line_id, weight_id))
+
         self.text_log.log(loop_created=(self.vx1.get_label(), self.vx2.get_label()))
 
         self.x1 = None
@@ -344,6 +346,9 @@ class DeleteItem(BaseItem):
                 self.graph.delete_vx(item)
             elif 'lines' in self.canvas.gettags(item):
                 self.graph.delete_edge(item)
+            elif 'loops' in self.canvas.gettags(item):
+                self.graph.delete_edge(item)
+
             self.canvas.delete_item(item)
                 
         """

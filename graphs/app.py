@@ -143,7 +143,10 @@ class App(tk.Frame):
         Open a .graph file and draw it on the canvas.
         """
         filetypes = (('Graph files', '*.graph'),)
-        filename = fd.askopenfilename(title='Open a file', initialdir='./', filetypes=filetypes)
+
+        filename = fd.askopenfilename(title='Open a file',
+                                      initialdir='../saved',
+                                      filetypes=filetypes)
 
         reader = IO()
         self.graph = reader.read(filename)
@@ -154,22 +157,26 @@ class App(tk.Frame):
         Save a drawn graph as .graph file
         """
         parser = IO()
-        file_name = fd.asksaveasfile(initialfile='graph.graph', defaultextension='.graph',
+        file_name = fd.asksaveasfile(initialfile='graph.graph',
+                                     defaultextension='.graph',
                                      filetypes=(('Graph files', '*.graph'),), 
                                      mode='w')
         
         if file_name is None:
             return
+
         parser.parse(file_name, self.graph)
 
     def export(self):
         """
         Save drawn graph as png. 
         """
-        file_name = fd.asksaveasfilename(initialfile='img.png', defaultextension='.png',
+        file_name = fd.asksaveasfilename(initialfile='img.png',
+                                         defaultextension='.png',
                                          filetypes=(('png file', '*.png'),))
 
-        # we have to wait otherwise the dialogue box would still displayed on the picture
+        # we have to wait otherwise the dialogue box would still
+        # displayed on the picture
         time.sleep(0.5)
 
         ImageGrab.grab(bbox=(
@@ -194,8 +201,10 @@ class App(tk.Frame):
             y = vertex.get_coords()[1] 
                 
             oval_id = self.canvas.create_oval(x-r, y-r, x+r, y+r, tag='ovals')
-            label_id = self.canvas.create_text(x, y, 
-                                               text=vertex.get_label(), tag='labels')
+            label_id = self.canvas.create_text(x,
+                                               y, 
+                                               text=vertex.get_label(), 
+                                               tag='labels')
             vertex.set_oval_id(oval_id)
             vertex.set_label_id(label_id)
 
@@ -210,7 +219,8 @@ class App(tk.Frame):
             # if the edge is a loop
             if x_start == x_end and y_start == y_end:
                 line_id = self.canvas.create_oval(x_start-25, y_start-25,
-                                                  x_start+15, y_start+15, tag='loops')
+                                                  x_start+15, y_start+15,
+                                                  tag='loops')
 
                 weight_id = self.canvas.create_text(x_start, y_start-25,
                                                     text=edge.get_weight(),
@@ -221,7 +231,8 @@ class App(tk.Frame):
                 y_center = (y_end + y_start) / 2
             
                 line_id = self.canvas.create_line(x_start, y_start,
-                                                  x_end, y_end, tag='lines')
+                                                  x_end, y_end,
+                                                  tag='lines')
 
                 weight_id = self.canvas.create_text(x_center, y_center,
                                                     text=edge.get_weight(),
