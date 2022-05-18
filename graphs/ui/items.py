@@ -364,12 +364,18 @@ class ColorItem(BaseItem):
     def __call__(self, event):
         BaseItem.__call__(self, event)
         for item in self.selected_items:
+            # return each time so it colors only one item each time
             if 'ovals' in self.canvas.gettags(item):
                 self.canvas.itemconfigure(item, fill=self.color)
+                return
             elif 'lines' in self.canvas.gettags(item):
                 self.canvas.itemconfigure(item, fill=self.color)
+                return
             elif 'loops' in self.canvas.gettags(item):
                 self.canvas.itemconfigure(item, fill=self.color)
+                return
+
+
 
         
 
