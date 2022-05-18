@@ -174,7 +174,8 @@ class App(tk.Frame):
         file_name = fd.asksaveasfilename(initialfile='img.png',
                                          defaultextension='.png',
                                          filetypes=(('png file', '*.png'),))
-
+        if file_name is '': 
+            return
         # we have to wait otherwise the dialogue box would still
         # displayed on the picture
         time.sleep(0.5)
