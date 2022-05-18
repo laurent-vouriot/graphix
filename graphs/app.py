@@ -17,6 +17,8 @@
 
 from tkinter import filedialog as fd
 from tkinter import PhotoImage  # app icon 
+from tkinter import ttk
+from tkinter.colorchooser import askcolor 
 
 from PIL import ImageGrab # save as png
 
@@ -85,7 +87,8 @@ class App(tk.Frame):
 
         # buttons
         self.create_buttons()
-
+        
+        # log
         self.text_log = Log(self.text)
     
     def create_buttons(self):      
@@ -127,6 +130,13 @@ class App(tk.Frame):
                                        command=self.useDirectedEdgeDrawer, 
                                        bg='#D7FDF0', activebackground='#B2FFD6')
         self.directed_edge.grid(row=6, column=0, sticky='new') 
+
+        # color selector
+        self.color_selector = tk.Button(button_frame, text='Color', 
+                               command=self.select_color, 
+                               bg='#D7FDF0', activebackground='#B2FFD6')
+        self.color_selector.grid(row=7, column=0, sticky='new') 
+
 
     def new(self):
         """
@@ -187,6 +197,7 @@ class App(tk.Frame):
             self.canvas.winfo_rooty() + self.canvas.winfo_height()
         )).save(file_name)
 
+    
     def drawGraph(self):
         """
         when .graph file is opened first the the datastructure is 
@@ -254,35 +265,54 @@ class App(tk.Frame):
         Bind left clic to the select item. 
         """
         self.canvas.unbind('<Button-1>')
-        self.canvas.bind('<Button-1>', Select(self.canvas, self.text_log, self.graph))
+        self.canvas.bind('<Button-1>', Select(self.canvas,
+                                              self.text_log,
+                                              self.graph))
 
     def useVertexDrawer(self):
         """
         Bind left clic to the vertex item. 
         """
         self.canvas.unbind('<Button-1>')
-        self.canvas.bind('<Button-1>', DrawVertex(self.canvas, self.text_log, self.graph))
+        self.canvas.bind('<Button-1>', DrawVertex(self.canvas,
+                                                  self.text_log,    
+                                                  self.graph))
         
     def useEdgeDrawer(self):
         """
         Bind left clic to the edge item.
         """
         self.canvas.unbind('<Button-1>')
-        self.canvas.bind('<Button-1>', DrawEdge(self.canvas, self.text_log, self.graph))
+        self.canvas.bind('<Button-1>', DrawEdge(self.canvas, 
+                                                self.text_log, 
+                                                self.graph))
 
     def useDirectedEdgeDrawer(self):
         """
         Bind left clic to the the edge item with directed.
         """
         self.canvas.unbind('<Button-1>')
-        self.canvas.bind('<Button-1>', DrawEdge(self.canvas, self.text_log, self.graph, 
-                         directed=True))
+        self.canvas.bind('<Button-1>', DrawEdge(self.canvas,
+                                                self.text_log,
+                                                self.graph, 
+                                                directed=True))
     def useRubber(self):
         """
         Bind left clic to the rubber item.
         """
         self.canvas.unbind('<Button-1>')
-        self.canvas.bind('<Button-1>', DeleteItem(self.canvas, self.text_log, self.graph))
+        self.canvas.bind('<Button-1>', DeleteItem(self.canvas,
+                                                  self.text_log,
+                                                  self.graph))
+
+    def select_color(self):
+        color = askcolor(title="Color selector")
+        self.canvas.unbind('<Button-1>')
+        self.canvas.bind('<Button-1>', ColorItem(self.canvas, 
+                                                 self.text_log,
+                                                 self.graph,
+                                                 color))
+
 
 # -----------------------------------------------------------------------------
 

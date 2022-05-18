@@ -353,3 +353,23 @@ class DeleteItem(BaseItem):
                 self.graph.delete_edge(item)
 
             self.canvas.delete_item(item)
+
+# -----------------------------------------------------------------------------
+
+class ColorItem(BaseItem):
+    def __init__(self, canvas, text_log, graph, color): 
+        BaseItem.__init__(self, canvas, text_log, graph)
+        self.color = color[1]
+        
+    def __call__(self, event):
+        BaseItem.__call__(self, event)
+        for item in self.selected_items:
+            if 'ovals' in self.canvas.gettags(item):
+                self.canvas.itemconfigure(item, fill=self.color)
+            elif 'lines' in self.canvas.gettags(item):
+                self.canvas.itemconfigure(item, fill=self.color)
+            elif 'loops' in self.canvas.gettags(item):
+                self.canvas.itemconfigure(item, fill=self.color)
+
+        
+
