@@ -281,14 +281,16 @@ class DrawEdge(BaseItem):
                                          "Weight ? (press cancel for no weight)",
                                          parent=self.canvas)
         
-        weight_id = self.canvas.create_text(x_center, y_center, 
-                                            text=weight, tag='weights')
-        
+        weight_id = self.canvas.create_text(x_center,
+                                            y_center, 
+                                            text=weight,
+                                            tag='weights')
 
-        self.canvas.add_edge_items((line_id, weight_id))
 
         self.graph.add_edge(Edge(self.vx1, self.vx2, line_id,
                                  weight=weight, weight_id=weight_id))
+
+        self.canvas.add_edge_items((line_id, weight_id))
 
         self.text_log.log(edge_created=(self.vx1.get_label(), self.vx2.get_label()))
         
@@ -341,6 +343,7 @@ class DeleteItem(BaseItem):
         """
         BaseItem.__call__(self, event)
         
+
         for item in self.selected_items:
             if 'ovals' in self.canvas.gettags(item):
                 self.graph.delete_vx(item)
@@ -350,20 +353,3 @@ class DeleteItem(BaseItem):
                 self.graph.delete_edge(item)
 
             self.canvas.delete_item(item)
-                
-        """
-        # delete the elements from the canvas
-        for item in self.selected_items:
-            print(self.canvas.gettags(item)) # delete vertex in the graph
-            self.canvas.delete_item(item)
-        if self.is_vertex(self.selected_items):
-            self.text_log.log(vertex_deleted=
-                    self.graph.find_vx_from_id(self.selected_items[0]).get_label())
-            self.graph.delete_vx(self.selected_items[0])
-        
-        # delete edge in the graph
-        elif self.is_edge(self.selected_items):
-            self.text_log.log(edge_deleted=
-                    self.graph.find_edge_from_id(self.selected_items[0]).get_line_id())
-            self.graph.delete_edge(self.selected_items[0])
-        """
