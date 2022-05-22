@@ -27,6 +27,18 @@ running in __python3__.
 - Tkinter
 - PIL 
 
+to install them run : 
+```
+python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade tk
+python3 -m pip install --upgrade Pillow
+```
+
+to run the program :
+
+```
+python3 /graphix/graphs/app.py
+```
 ### Future work : 
 - Implements algorithms (Shortest path, Spanning tree, Djikstra...).
 - Compatible with windows.
