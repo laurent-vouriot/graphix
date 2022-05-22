@@ -15,7 +15,7 @@
 
 -------------------------------------------------------------
 
-### Working in __python3__.
+### Working Linux and macOS in  __python3__.
 
 tested on : 
 
