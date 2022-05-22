@@ -342,7 +342,6 @@ class DeleteItem(BaseItem):
         :param event: (tk.Event)
         """
         BaseItem.__call__(self, event)
-        
 
         for item in self.selected_items:
             if 'ovals' in self.canvas.gettags(item):
