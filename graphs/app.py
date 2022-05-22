@@ -321,9 +321,9 @@ if __name__ == '__main__':
     master.title('graphix')
     master.geometry('1000x700')
     
-    # icon 
-    photo = PhotoImage(file = '../src/petersen_icon.png')
-    master.iconphoto(False, photo)
+    # icon, need to be multiplateform
+    # photo = PhotoImage(file = '../src/petersen_icon.png')
+    # master.iconphoto(False, photo)
 
     app = App(master)
     app.mainloop()
