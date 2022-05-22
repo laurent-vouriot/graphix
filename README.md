@@ -16,7 +16,7 @@ running in __python3__.
 ### Right now you can : 
 
 - Draw simple graphs : 
-![pertersen_graph](src/petesen_demo.png)
+![pertersen_graph](src/petersen_demo.png)
 - Draw directed and weighted graphs :   
 ![weighted_graph](src/weighted_graph_demo.png)
 
