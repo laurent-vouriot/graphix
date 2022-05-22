@@ -110,32 +110,33 @@ class App(tk.Frame):
         self.edge = tk.Button(button_frame, text='Edge', 
                               command=self.useEdgeDrawer, 
                               bg='#D7FDF0', activebackground='#B2FFD6')
-
         self.edge.grid(row=2, column=0, sticky='new') 
+
+        # directed edge
+        self.directed_edge = tk.Button(button_frame, text='Directed edge', 
+                                       command=self.useDirectedEdgeDrawer, 
+                                       bg='#D7FDF0', activebackground='#B2FFD6')
+        self.directed_edge.grid(row=3, column=0, sticky='new') 
+
 
         # select
         self.select = tk.Button(button_frame, text='Select', 
                                 command=self.select,
                                 bg='#D7FDF0', activebackground='#B2FFD6')
-        self.select.grid(row=3, column=0, sticky='new')
+        self.select.grid(row=4, column=0, sticky='new')
         
         # rubber 
         self.rubber = tk.Button(button_frame, text='Rubber', 
                                 command=self.useRubber,
                                 bg='#D7FDF0', activebackground='#B2FFD6')
-        self.rubber.grid(row=4, column=0, sticky='new')
+        self.rubber.grid(row=5, column=0, sticky='new')
         
-        # directed edge
-        self.directed_edge = tk.Button(button_frame, text='Directed edge', 
-                                       command=self.useDirectedEdgeDrawer, 
-                                       bg='#D7FDF0', activebackground='#B2FFD6')
-        self.directed_edge.grid(row=6, column=0, sticky='new') 
-
+        
         # color selector
         self.color_selector = tk.Button(button_frame, text='Color', 
                                command=self.select_color, 
                                bg='#D7FDF0', activebackground='#B2FFD6')
-        self.color_selector.grid(row=7, column=0, sticky='new') 
+        self.color_selector.grid(row=6, column=0, sticky='new') 
 
 
     def new(self):
@@ -226,8 +227,7 @@ class App(tk.Frame):
             x_end = edge.get_vx_end().get_coords()[0]
             y_end = edge.get_vx_end().get_coords()[1]
 
-            #TODO ARROW ! 
-
+            #TODO ARROW 
             # if the edge is a loop
             if x_start == x_end and y_start == y_end:
                 line_id = self.canvas.create_oval(x_start-25, y_start-25,
