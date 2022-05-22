@@ -43,7 +43,7 @@ tested on :
 ### Libraries needed :
 
 - Tkinter
-- PIL 
+- Pillow
 
 to install them run : 
 
