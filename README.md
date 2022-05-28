@@ -15,7 +15,7 @@
 
 -------------------------------------------------------------
 
-### Working on Linux and macOS in  __python3__.
+### Working on Linux, macOS and windows in  __python3__.
 
 tested on : 
 
@@ -76,7 +76,6 @@ python3 /graphix/graphs/app.py
 ### Future work :
 
 - Implement algorithms (Shortest path, Spanning tree, Djikstra...).
-- Windows compatibilty.
 - Export to tikz for Latex.
 
 
