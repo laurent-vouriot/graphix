@@ -22,6 +22,7 @@ tested on :
 - Fedora 31 
 - Ubuntu 18.04
 - macOS Monterey 12.2
+- Windows 10
 
 ### Right now you can :
 
