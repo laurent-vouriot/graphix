@@ -48,7 +48,9 @@ class IO(object):
         edges = [] 
         
         for vertex in data['verticies']:
-            current_vx = Vertex(item_counter, item_counter+1, vertex['label'], vertex['coords'])
+            current_vx = Vertex(item_counter, item_counter+1, vertex['label'], vertex['coords'], 
+                                color=vertex['color'])
+
             verticies.append(current_vx)
             adjacency_list[current_vx] = [] 
         
@@ -76,6 +78,7 @@ class IO(object):
             for elem in adjacency_list[vertex]:
                 vx_neighbours.append((elem[0].get_label(), elem[1]))
             vx_data = {'label' : vertex.get_label(), 'coords' : vertex.get_coords(),
+                       'color' : vertex.get_color(), 
                        'neighbours' : vx_neighbours} 
 
             graph_dict['verticies'].append(vx_data)

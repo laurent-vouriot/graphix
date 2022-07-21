@@ -189,6 +189,7 @@ class DrawVertex(BaseItem):
         # datastructure. 
         self.graph.add_vx(Vertex(oval_id, label_id, label, self.canvas.coords(oval_id)))
 
+
         self.text_log.log(vertex=label)
         self.text_log.log(coords=(event.x, event.y))
         
@@ -366,6 +367,7 @@ class ColorItem(BaseItem):
             # return each time so it colors only one item each time
             if 'ovals' in self.canvas.gettags(item):
                 self.canvas.itemconfigure(item, fill=self.color)
+                self.graph.update_vx_color(item, self.color)
                 return
             elif 'lines' in self.canvas.gettags(item):
                 self.canvas.itemconfigure(item, fill=self.color)

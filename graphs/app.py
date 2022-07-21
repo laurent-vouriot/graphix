@@ -23,6 +23,7 @@ from tkinter.colorchooser import askcolor
 from PIL import ImageGrab # save as png
 
 import time
+import os
 
 from ui.items import *
 from utils.log import * 
@@ -218,6 +219,11 @@ class App(tk.Frame):
                                                y, 
                                                text=vertex.get_label(), 
                                                tag='labels')
+
+            self.canvas.itemconfigure(oval_id, fill=vertex.get_color())
+
+            # we reset the different items id the creation order may be 
+            # different
             vertex.set_oval_id(oval_id)
             vertex.set_label_id(label_id)
 
@@ -322,6 +328,7 @@ if __name__ == '__main__':
     master.geometry('1000x700')
     
     # icon, need to be multiplateform
+    
     # photo = PhotoImage(file = '../src/petersen_icon.png')
     # master.iconphoto(False, photo)
 

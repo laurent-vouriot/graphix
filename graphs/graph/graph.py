@@ -25,12 +25,14 @@ class Vertex(object):
     a vertex is thus composed of the oval_id, text_id and the actual 
     label of the vertex.
     """
-    def __init__(self, oval_id, text_id, label, coords):
+    def __init__(self, oval_id, text_id, label, coords, color=None):
         """
         :param oval_id: (int) id of the vertex circle on the canvas. 
         :param text_id: (int) id of the text label on the canvas.
         :param label: (str) label of the vertex.
         :param coords: (list(int)) coords of the oval on the canvas.
+        :param color: (hex) color of the vertex on the canvas, None if 
+        not colored.
 
         Construsctor.
         """
@@ -38,6 +40,7 @@ class Vertex(object):
         self.text_id = text_id
         self.label = label
         self.coords = coords
+        self.color = color
 
     def get_oval(self):
         """
@@ -62,12 +65,18 @@ class Vertex(object):
         :returns: (list(int)) coords. 
         """
         return self.coords
+
+    def get_color(self):
+        """
+        :returns: (hex) color.
+        """
+        return self.color
     
     def get_vertex(self):
         """
         :returns: (Tuple(int, int, str) (oval_id, text_id, label).
         """
-        return (self.oval_id, self.text_id, self.label)
+        return (self.oval_id, self.text_id, self.label, self.color)
 
     def set_label(self, new_label):
         """
@@ -92,6 +101,12 @@ class Vertex(object):
         :param coords: (list(int)) Sets the coords.
         """
         self.coords = coords
+    
+    def set_color(self, color):
+        """
+        :param color: (hex) Sets the color.
+        """
+        self.color = color
 
 # -----------------------------------------------------------------------------
 
@@ -214,7 +229,7 @@ class Graph(object):
         """
         :param line_id: (int) id of the canvas line
 
-        :returns: (Vertex) Edge instance corresponding to the circle id.
+        :returns: (Edge) Edge instance corresponding to the circle id.
 
         On the canvas when selecting an edge we get the line id, this 
         function returns the Edge instance corresponding the line id.
@@ -298,6 +313,11 @@ class Graph(object):
             self.adjacency_list[vx_start].remove((vx_start, weight))
         
         self.display_adjacency()
+
+    def update_vx_color(self, vx_id, color):
+        vx = self.find_vx_from_id(vx_id)
+        vx.set_color(color)
+
 
     def get_and_update_vx_counter(self): 
         """
