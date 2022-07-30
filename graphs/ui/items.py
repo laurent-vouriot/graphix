@@ -192,6 +192,8 @@ class DrawVertex(BaseItem):
 
         self.text_log.log(vertex=label)
         self.text_log.log(coords=(event.x, event.y))
+
+        print(repr(self.graph))
         
 # -----------------------------------------------------------------------------
 
@@ -287,7 +289,6 @@ class DrawEdge(BaseItem):
                                             text=weight,
                                             tag='weights')
 
-
         self.graph.add_edge(Edge(self.vx1, self.vx2, line_id,
                                  weight=weight, weight_id=weight_id))
 
@@ -302,6 +303,8 @@ class DrawEdge(BaseItem):
         self.y2 = None
         self.vx1 = None 
         self.vx2 = None
+
+        print(repr(self.graph))
 
     def draw_loop(self):
         """
@@ -371,6 +374,7 @@ class ColorItem(BaseItem):
                 return
             elif 'lines' in self.canvas.gettags(item):
                 self.canvas.itemconfigure(item, fill=self.color)
+                self.graph.update_edge_color(item, self.color)
                 return
             elif 'loops' in self.canvas.gettags(item):
                 self.canvas.itemconfigure(item, fill=self.color)

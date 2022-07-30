@@ -162,7 +162,9 @@ class App(tk.Frame):
 
         reader = IO()
         self.graph = reader.read(filename)
+        print(repr(self.graph))
         self.drawGraph()
+
 
     def save(self):
         """
@@ -207,7 +209,6 @@ class App(tk.Frame):
         we will draw it on the canvas.
         """
         self.canvas.delete('all')
-        self.graph.display_adjacency()
 
         r = 10
         for vertex in self.graph.get_verticies():
@@ -228,11 +229,11 @@ class App(tk.Frame):
             vertex.set_label_id(label_id)
 
         for edge in self.graph.get_edges():
+            
             x_start = edge.get_vx_start().get_coords()[0]
             y_start = edge.get_vx_start().get_coords()[1]
             x_end = edge.get_vx_end().get_coords()[0]
             y_end = edge.get_vx_end().get_coords()[1]
-
             #TODO ARROW 
             # if the edge is a loop
             if x_start == x_end and y_start == y_end:
@@ -243,6 +244,8 @@ class App(tk.Frame):
                 weight_id = self.canvas.create_text(x_start, y_start-25,
                                                     text=edge.get_weight(),
                                                     tag='loop_weights')
+
+                self.canvas.itemconfigure(line_id, fill=edge.get_color())
             # common edge
             else:
                 x_center = (x_end + x_start) / 2
@@ -255,9 +258,11 @@ class App(tk.Frame):
                 weight_id = self.canvas.create_text(x_center, y_center,
                                                     text=edge.get_weight(),
                                                     tag='weights')
+                self.canvas.itemconfigure(line_id, fill=edge.get_color())
+
             
             # when opened the .graph file contains canvas ids of the items from 
-            # the previous drawing, but when redrawn, the ids won't en the same
+            # the previous drawing, but when redrawn, the ids won't be the same
             # that's why we set them again.
             edge.set_line_id(line_id)
             edge.set_weight_id(weight_id)
