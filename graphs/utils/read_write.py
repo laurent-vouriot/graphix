@@ -8,7 +8,7 @@
 #
 #   reader_parser.py
 #
-#   last update 27/03/22
+#   last update 30/07/22
 #
 #   laurent vouriot
 # 
@@ -21,7 +21,7 @@ from graph.graph import *
 class IO(object):
     def find_vx_from_label(self, verticies, vx_label):
         """
-        :param vx_id: (int) id of the canvas circle 
+        :param vx_id: (int) id of the canvas circle.
 
         :returns: (Vertex) Vertex instance corresponding to the circle id.
 
@@ -33,20 +33,33 @@ class IO(object):
                 return vertex
 
     def exist_edge(self, vx_start, vx_end, edges):
+        """
+        :param vx_start: (Vertex) start vertex.
+        :param vx_end: (Vertex) end vertex.
+        :param edges: (list(Edge)) List of edges.
+
+        Given a start and end verticies check in the edge list
+        wether this edge really exists.
+        """
         for edge in edges:
             if edge.get_vx_start() == vx_end and edge.get_vx_end() == vx_start:
                 return True
         return False
 
     def read(self, filename):
+        """
+        :param filename: (str) file where the graph is saved.
+
+        open a .graph file and read its content and construct a graph.
+        """
         with open(filename) as f:
             data = json.load(f)       
 
         item_counter = 0
-        # adjacency_list = {}  
         verticies = []
         edges = [] 
         
+        # read verticies
         for vertex in data['verticies']:
             current_vx = Vertex(item_counter, 
                                 item_counter+1, 
@@ -55,8 +68,8 @@ class IO(object):
                                 color=vertex['color'])
 
             verticies.append(current_vx)
-            # adjacency_list[current_vx] = [] 
-        
+         
+        # read edges
         for edge in data['edges']:
             vx_start = None
             vx_end = None
@@ -67,7 +80,7 @@ class IO(object):
                 if edge['vx_end'] == vx.get_label():
                     vx_end = vx
             
-            
+               
             current_edge = Edge(vx_start,
                                 vx_end,
                                 edge['line_id'],
@@ -75,43 +88,18 @@ class IO(object):
                                 color=edge['color'])
 
             edges.append(current_edge) 
-            
-        """
-        for vertex in data['verticies']: 
-            current_vx = self.find_vx_from_label(verticies, vertex['label'])
-            for neighbour in vertex['neighbours']:
-                neighbour_vx = self.find_vx_from_label(verticies, neighbour[0])
-
-                if not self.exist_edge(current_vx, neighbour_vx, edges):
-                    edges.append(Edge(current_vx, 
-                                      neighbour_vx, 
-                                      item_counter+1, 
-                                      weight=neighbour[1]))
-                    item_counter += 1
-
-                adjacency_list[current_vx].append((neighbour_vx, neighbour[1]))
-        """
         return Graph(verticies, edges) 
     
     def parse(self, filename, graph):
+        """
+        :param filename: (str) file where to save the save.
+        :param graph: (Graph) Graph instance we want to save.
+
+        """
         graph_dict = {}
         graph_dict['directed'] = False
         graph_dict['verticies'] = []
         graph_dict['edges'] = []
-        
-        """
-        adjacency_list = graph.get_adjacency()
-        for vertex in adjacency_list:
-            vx_neighbours = [] 
-            for elem in adjacency_list[vertex]:
-                vx_neighbours.append((elem[0].get_label(), elem[1]))
-
-            vx_data = {'label' : vertex.get_label(), 'coords' : vertex.get_coords(),
-                       'color' : vertex.get_color(), 
-                       'neighbours' : vx_neighbours} 
-
-            graph_dict['verticies'].append(vx_data)
-        """
         
         for vertex in graph.get_verticies():
             vx_data = {

@@ -8,7 +8,7 @@
 #
 #   app.py
 # 
-#   last update 04/05/22
+#   last update 30/07/22
 #
 #   laurent vouriot
 #
@@ -259,7 +259,6 @@ class App(tk.Frame):
                                                     text=edge.get_weight(),
                                                     tag='weights')
                 self.canvas.itemconfigure(line_id, fill=edge.get_color())
-
             
             # when opened the .graph file contains canvas ids of the items from 
             # the previous drawing, but when redrawn, the ids won't be the same
@@ -333,7 +332,6 @@ if __name__ == '__main__':
     master.geometry('1000x700')
     
     # icon, need to be multiplateform
-    
     # photo = PhotoImage(file = '../src/petersen_icon.png')
     # master.iconphoto(False, photo)
 

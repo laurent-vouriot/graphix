@@ -8,7 +8,7 @@
 #
 #   graph.py
 #
-#   last update 05/05/22
+#   last update 30/07/22
 #
 #   laurent vouriot
 # 
@@ -22,8 +22,12 @@ class Vertex(object):
     a text item, the vertex class is used to gather all these items
     in a single object.
 
-    a vertex is thus composed of the oval_id, text_id and the actual 
-    label of the vertex.
+    a vertex is thus composed of : 
+    - the oval id 
+    - the text id 
+    - the label
+    - the coords 
+    - the color
     """
     def __init__(self, oval_id, text_id, label, coords, color=None):
         """
@@ -119,6 +123,14 @@ class Edge(object):
 
     An edge on the canvas is a line with maybe a weight between two verticies
     instances.
+
+    An edge object is composed of : 
+    - the start vertex
+    - the end vertex
+    - the line id 
+    - the weight
+    - the weight id
+    - the color
     """
     def __init__(self, vx_start, vx_end, line_id, weight=None, weight_id=None, color=None):
         """
@@ -192,6 +204,9 @@ class Edge(object):
         self.color = color
 
     def __repr__(self): 
+        """
+        repr.
+        """
         return 'edge ({},{}), weight : {}, color : {}'.format(self.vx_start,
                                                             self.vx_end,
                                                             self.weight,
@@ -212,7 +227,7 @@ class Graph(object):
     - an empty graph when we start a new embedding
     - create graph from a serialized object previously drawn.
     """
-    def __init__(self, verticies=None, edges=None):#, adjacency_list=None):
+    def __init__(self, verticies=None, edges=None):
         """
         :param verticies: (list(Vertex)) array of verticies. 
         :param edges: (list(Edge)) array of edges.
@@ -223,14 +238,12 @@ class Graph(object):
         # empty graph, new drawing
         if verticies == None:
             self.vx_counter = 0
-            # self.adjacency_list = {}
             self.verticies = []
             self.edges = []
         # serialized graph
         else:
             # we retrieve the label on the last vertex
             self.vx_counter = len(verticies) - 1
-            # self.adjacency_list = adjacency_list
             self.verticies = verticies
             self.edges = edges
     
@@ -267,8 +280,6 @@ class Graph(object):
         Add a vertex instance to the datastructure.
         """
         self.verticies.append(vertex)
-        # self.adjacency_list[vertex] = []
-        # self.display_adjacency()
             
     def add_edge(self, edge):
         """
@@ -277,20 +288,6 @@ class Graph(object):
         Add an edge instance to the datastructure.
         """
         self.edges.append(edge)
-        #vx_start = edge.get_vx_start()
-        #vx_end = edge.get_vx_end()
-        #weight = edge.get_weight() 
-        #color = edge.get_color()
-            
-        # for an undirected graph the verticies of an edge are symetrical. <--------- FAUX
-        
-        #if vx_start != vx_end:
-        #    self.adjacency_list[vx_start].append((vx_end, weight, color))
-        #    self.adjacency_list[vx_end].append((vx_start, weight, color))
-        # else: # loop case
-        #   self.adjacency_list[vx_start].append((vx_end, weight, color))
-
-        #self.display_adjacency()
 
     def delete_vx(self, vx_id):
         """
@@ -307,15 +304,6 @@ class Graph(object):
             if edge.get_vx_start().get_oval() == vx_id or edge.get_vx_end().get_oval() == vx_id:
                    self.edges.remove(edge)
 
-        # self.adjacency_list.pop(vx)
-        
-        # removing the incident edges of this vx
-        #for vertex, neighbour in self.adjacency_list.items():
-        #    for elem in neighbour:
-        #        if vx in elem:
-        #            self.adjacency_list[vertex].remove(elem)
-        #    self.display_adjacency()
-
     def delete_edge(self, line_id):
         """
         :param line_id: (int) id of the line item on the canvas.
@@ -329,22 +317,6 @@ class Graph(object):
         if edge != None:
             self.edges.remove(edge)
         
-        #vx_start = edge.get_vx_start() 
-        #vx_end = edge.get_vx_end()
-        #weight = edge.get_weight()
-        
-        # if we have delete a vertex connected to an edge
-        # the vertex would already be deleted. 
-        #if vx_start != vx_end:
-         #   pass
-            # undirected graph
-            # self.adjacency_list[vx_start].remove((vx_end, weight))
-            # self.adjacency_list[vx_end].remove((vx_start, weight))
-        #else: # loop case
-        #    self.adjacency_list[vx_start].remove((vx_start, weight))
-        
-        #self.display_adjacency()
-
     def update_vx_color(self, vx_id, color):
         """
         :param vx_id: (int)
@@ -367,21 +339,6 @@ class Graph(object):
         edge = self.find_edge_from_id(edge_id) 
         edge.set_color(color)
         
-        #vx_start = edge.get_vx_start()
-        #vx_end = edge.get_vx_end() 
-        #weight = edge.get_weight()
-
-        # update adjacency list 
-        #if vx_start != vx_end:
-        #    self.adjacency_list = [(vx_end, weight, color) if elem == vx_start else elem for elem in self.adjacency_list]
-         #   self.adjacency_list = [(vx_start, weight, color) if elem == vx_end else elem for elem in self.adjacency_list]
-            #self.adjacency_list = [(vx_end, weight, color) if elem == vx_start else elem for elem in self.adjacency_list]
-            #self.adjacency_list = [(vx_start, weight, color) if elem == vx_end else elem for elem in self.adjacency_list]
-
-
-        #else: # loop case
-          #  self.adjacency_list = [(vx_end, weight, color) if elem == vx_start else elem for elem in self.adjacency_list]
-
     def get_and_update_vx_counter(self): 
         """
         convinient method to return the current vertex label
@@ -395,11 +352,8 @@ class Graph(object):
         """
         print the adjacency list for debug. 
         """
+        # TODO
         pass
-        # for vertex in self.adjacency_list:
-        #   print(vertex.get_label(), ' ',
-        #          [(i[0].get_label(), i[1]) for i  in self.adjacency_list[vertex]])
-        #print('------------')
 
     def get_verticies(self):
         """
@@ -420,10 +374,12 @@ class Graph(object):
         return self.adjacency_list
 
     def __repr__(self): 
+        """
+        repr.
+        """
         string = ''
         for vx in self.verticies:
             string += repr(vx) + '\n'
         for edge in self.edges:
             string += repr(edge) + '\n'
-
         return string
