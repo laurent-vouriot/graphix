@@ -8,7 +8,7 @@
 #
 #   items.py
 # 
-#   last update 01/05/22
+#   last update 30/07/22
 #
 #   laurent vouriot
 #
@@ -147,6 +147,11 @@ class Select(BaseItem):
 
 
     def deselect(self, event):
+        """
+        :param event: (tk.Event) 
+
+        deselect an item. 
+        """
         self.canvas.unbind('<Motion>') 
 
 # -----------------------------------------------------------------------------
@@ -192,8 +197,6 @@ class DrawVertex(BaseItem):
 
         self.text_log.log(vertex=label)
         self.text_log.log(coords=(event.x, event.y))
-
-        print(repr(self.graph))
         
 # -----------------------------------------------------------------------------
 
@@ -377,10 +380,5 @@ class ColorItem(BaseItem):
                 self.graph.update_edge_color(item, self.color)
                 return
             elif 'loops' in self.canvas.gettags(item):
-                self.canvas.itemconfigure(item, fill=self.color)
+                self.canvas.itemconfigure(item, outline=self.color)
                 return
-
-
-
-        
-

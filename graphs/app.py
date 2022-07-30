@@ -245,7 +245,7 @@ class App(tk.Frame):
                                                     text=edge.get_weight(),
                                                     tag='loop_weights')
 
-                self.canvas.itemconfigure(line_id, fill=edge.get_color())
+                self.canvas.itemconfigure(line_id, outline=edge.get_color())
             # common edge
             else:
                 x_center = (x_end + x_start) / 2
