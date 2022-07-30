@@ -381,4 +381,6 @@ class ColorItem(BaseItem):
                 return
             elif 'loops' in self.canvas.gettags(item):
                 self.canvas.itemconfigure(item, outline=self.color)
+                self.graph.update_edge_color(item, self.color)
                 return
+

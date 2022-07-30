@@ -80,7 +80,6 @@ class IO(object):
                 if edge['vx_end'] == vx.get_label():
                     vx_end = vx
             
-               
             current_edge = Edge(vx_start,
                                 vx_end,
                                 edge['line_id'],
@@ -94,7 +93,6 @@ class IO(object):
         """
         :param filename: (str) file where to save the save.
         :param graph: (Graph) Graph instance we want to save.
-
         """
         graph_dict = {}
         graph_dict['directed'] = False
@@ -107,7 +105,6 @@ class IO(object):
                        'coords' : vertex.get_coords(),
                        'color' : vertex.get_color()
                       }
-
             graph_dict['verticies'].append(vx_data)
 
         for edge in graph.get_edges():
