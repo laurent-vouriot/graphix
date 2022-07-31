@@ -46,6 +46,12 @@ class Vertex(object):
         self.coords = coords
         self.color = color
 
+    def generate_adjacency(self):
+        pass
+
+    def generate_incidence_matrix(self):
+        pass 
+
     def get_oval(self):
         """
         :returns: (int) oval_id.
@@ -227,7 +233,7 @@ class Graph(object):
     - an empty graph when we start a new embedding
     - create graph from a serialized object previously drawn.
     """
-    def __init__(self, verticies=None, edges=None):
+    def __init__(self, verticies=None, edges=None, directed=False):
         """
         :param verticies: (list(Vertex)) array of verticies. 
         :param edges: (list(Edge)) array of edges.
@@ -235,6 +241,8 @@ class Graph(object):
 
         Constructor.
         """
+        self.directed = directed
+        
         # empty graph, new drawing
         if verticies == None:
             self.vx_counter = 0
@@ -372,6 +380,18 @@ class Graph(object):
         :returns: (dict)
         """
         return self.adjacency_list
+    
+    def set_to_directed(self):
+        """
+        Set the graph to directed.
+
+        At first all graphs are considered as undirected, but if the user
+        add a directed edge the must be set to directed.
+        """
+        self.directed = True
+
+    def is_directed(self):
+        return self.directed
 
     def __repr__(self): 
         """

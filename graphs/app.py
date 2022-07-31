@@ -209,6 +209,11 @@ class App(tk.Frame):
         we will draw it on the canvas.
         """
         self.canvas.delete('all')
+        
+        if self.graph.is_directed():
+            arrow = tk.LAST
+        else:
+            arrow = ''
 
         r = 10
         for vertex in self.graph.get_verticies():
@@ -234,7 +239,7 @@ class App(tk.Frame):
             y_start = edge.get_vx_start().get_coords()[1]
             x_end = edge.get_vx_end().get_coords()[0]
             y_end = edge.get_vx_end().get_coords()[1]
-            #TODO ARROW 
+
             # if the edge is a loop
             if x_start == x_end and y_start == y_end:
                 line_id = self.canvas.create_oval(x_start-25, y_start-25,
@@ -246,18 +251,23 @@ class App(tk.Frame):
                                                     tag='loop_weights')
 
                 self.canvas.itemconfigure(line_id, outline=edge.get_color())
+
             # common edge
             else:
                 x_center = (x_end + x_start) / 2
                 y_center = (y_end + y_start) / 2
+
+                
             
                 line_id = self.canvas.create_line(x_start, y_start,
                                                   x_end, y_end,
+                                                  arrow=arrow,
                                                   tag='lines')
 
                 weight_id = self.canvas.create_text(x_center, y_center,
                                                     text=edge.get_weight(),
                                                     tag='weights')
+
                 self.canvas.itemconfigure(line_id, fill=edge.get_color())
             
             # when opened the .graph file contains canvas ids of the items from 

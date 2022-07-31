@@ -58,7 +58,9 @@ class IO(object):
         item_counter = 0
         verticies = []
         edges = [] 
-        
+            
+        directed = data['directed']
+
         # read verticies
         for vertex in data['verticies']:
             current_vx = Vertex(item_counter, 
@@ -87,7 +89,7 @@ class IO(object):
                                 color=edge['color'])
 
             edges.append(current_edge) 
-        return Graph(verticies, edges) 
+        return Graph(verticies, edges, directed=directed) 
     
     def parse(self, filename, graph):
         """
@@ -95,7 +97,7 @@ class IO(object):
         :param graph: (Graph) Graph instance we want to save.
         """
         graph_dict = {}
-        graph_dict['directed'] = False
+        graph_dict['directed'] = graph.is_directed()
         graph_dict['verticies'] = []
         graph_dict['edges'] = []
         

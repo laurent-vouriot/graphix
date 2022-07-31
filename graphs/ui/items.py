@@ -226,6 +226,7 @@ class DrawEdge(BaseItem):
         # vertex.
         if directed:
             self.arrow = tk.LAST
+            self.graph.set_to_directed()
         else:
             self.arrow = ''
 
