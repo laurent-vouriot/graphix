@@ -60,6 +60,7 @@ class IO(object):
         edges = [] 
             
         directed = data['directed']
+        weighted = data['weighted']
 
         # read verticies
         for vertex in data['verticies']:
@@ -89,7 +90,11 @@ class IO(object):
                                 color=edge['color'])
 
             edges.append(current_edge) 
-        return Graph(verticies, edges, directed=directed) 
+
+        return Graph(verticies=verticies, 
+                     edges=edges, 
+                     directed=directed,
+                     weighted=weighted) 
     
     def parse(self, filename, graph):
         """
@@ -98,6 +103,7 @@ class IO(object):
         """
         graph_dict = {}
         graph_dict['directed'] = graph.is_directed()
+        graph_dict['weighted'] = graph.is_weighted()
         graph_dict['verticies'] = []
         graph_dict['edges'] = []
         

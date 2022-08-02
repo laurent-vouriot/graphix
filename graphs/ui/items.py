@@ -193,7 +193,10 @@ class DrawVertex(BaseItem):
         # after drawing the vertex on the canvas we need to save it in the
         # datastructure. 
         self.graph.add_vx(Vertex(oval_id, label_id, label, self.canvas.coords(oval_id)))
-
+        
+        # TODO delte
+        self.graph.generate_adjacency_list() 
+        self.graph.genereate_incidence_matrix()
 
         self.text_log.log(vertex=label)
         self.text_log.log(coords=(event.x, event.y))
@@ -292,6 +295,10 @@ class DrawEdge(BaseItem):
                                             y_center, 
                                             text=weight,
                                             tag='weights')
+        
+
+        if weight != None: 
+            self.graph.set_to_weighted()
 
         self.graph.add_edge(Edge(self.vx1, self.vx2, line_id,
                                  weight=weight, weight_id=weight_id))
@@ -300,6 +307,10 @@ class DrawEdge(BaseItem):
 
         self.text_log.log(edge_created=(self.vx1.get_label(), self.vx2.get_label()))
         
+        # TODO delete
+        self.graph.generate_adjacency_list()
+        self.graph.genereate_incidence_matrix()
+        
         # we reset all the coords for the next edge to be drawn. 
         self.x1 = None
         self.x2 = None
@@ -307,8 +318,6 @@ class DrawEdge(BaseItem):
         self.y2 = None
         self.vx1 = None 
         self.vx2 = None
-
-        print(repr(self.graph))
 
     def draw_loop(self):
         """
@@ -330,6 +339,10 @@ class DrawEdge(BaseItem):
         self.canvas.add_edge_items((line_id, weight_id))
 
         self.text_log.log(loop_created=(self.vx1.get_label(), self.vx2.get_label()))
+        
+        # TODO delete
+        self.graph.generate_adjacency_list()
+        self.graph.genereate_incidence_matrix()
 
         self.x1 = None
         self.x2 = None

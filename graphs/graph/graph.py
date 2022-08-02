@@ -46,12 +46,6 @@ class Vertex(object):
         self.coords = coords
         self.color = color
 
-    def generate_adjacency(self):
-        pass
-
-    def generate_incidence_matrix(self):
-        pass 
-
     def get_oval(self):
         """
         :returns: (int) oval_id.
@@ -233,7 +227,7 @@ class Graph(object):
     - an empty graph when we start a new embedding
     - create graph from a serialized object previously drawn.
     """
-    def __init__(self, verticies=None, edges=None, directed=False):
+    def __init__(self, verticies=None, edges=None, directed=False, weighted=False):
         """
         :param verticies: (list(Vertex)) array of verticies. 
         :param edges: (list(Edge)) array of edges.
@@ -242,6 +236,7 @@ class Graph(object):
         Constructor.
         """
         self.directed = directed
+        self.weighted = weighted
         
         # empty graph, new drawing
         if verticies == None:
@@ -254,7 +249,55 @@ class Graph(object):
             self.vx_counter = len(verticies) - 1
             self.verticies = verticies
             self.edges = edges
-    
+
+        self.adjacency_list = {}
+        self.incidence_matrix = [[]]
+
+    def generate_adjacency_list(self):
+        """
+        TODO doc
+        """
+        for vertex in self.verticies:
+            self.adjacency_list[vertex.get_label()] = []
+        
+        for edge in self.edges:
+            vx_start_label = edge.get_vx_start().get_label()
+            vx_end_label = edge.get_vx_end().get_label()
+            edge_weight = edge.get_weight()
+
+            self.adjacency_list[vx_start_label].append((vx_end_label, 
+                                                        edge_weight))
+
+            if not self.directed:
+                self.adjacency_list[vx_end_label].append((vx_start_label,
+                                                          edge_weight))
+            print(self.adjacency_list)
+
+    def genereate_incidence_matrix(self):
+        """
+        TODO doc 
+        """
+        # resizing the matrix n*n 
+        n = len(self.verticies) 
+        self.incidence_matrix = [[0] * n for i in range(n)]
+        
+        for edge in self.edges:
+            # we retrieve the indexes of the start/end verticies of the edges
+            # because their label can be anything 
+            index_vx_start = self.verticies.index(edge.get_vx_start()) 
+            index_vx_end = self.verticies.index(edge.get_vx_end())
+            
+            if self.is_weighted():
+                value = edge.get_weight()
+            else: 
+                value = 1
+
+            self.incidence_matrix[index_vx_start][index_vx_end] = value 
+            if not self.directed:
+                self.incidence_matrix[index_vx_end][index_vx_start] = value
+
+            print(self.incidence_matrix)
+
     def find_vx_from_id(self, vx_id):
         """
         :param vx_id: (int) id of the canvas circle 
@@ -310,7 +353,7 @@ class Graph(object):
         # removing the incident edges of this vx
         for edge in self.edges:
             if edge.get_vx_start().get_oval() == vx_id or edge.get_vx_end().get_oval() == vx_id:
-                   self.edges.remove(edge)
+                self.edges.remove(edge)
 
     def delete_edge(self, line_id):
         """
@@ -356,12 +399,15 @@ class Graph(object):
         self.vx_counter += 1
         return str(tmp)
 
-    def display_adjacency(self):
+    def display_adjacency(self, adjacency_list):
         """
         print the adjacency list for debug. 
         """
-        # TODO
-        pass
+        print(adjacency_list)
+        for vertex in adjacency_list:
+            print(vertex.get_label(), ' : ', 
+                    [i for i in adjacency_list[vertex.get_label()]])
+            print('------------')
 
     def get_verticies(self):
         """
@@ -390,8 +436,14 @@ class Graph(object):
         """
         self.directed = True
 
+    def set_to_weighted(self): 
+        self.weighted = True
+
     def is_directed(self):
         return self.directed
+
+    def is_weighted(self):
+        return self.weighted
 
     def __repr__(self): 
         """
